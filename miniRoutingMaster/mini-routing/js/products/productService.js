@@ -1,6 +1,6 @@
 angular.module('miniRouting');
 
-app.service('productService', function(){
+appMiniRouting.service('productService', function(){
   this.shoeData = [
     {
       type: 'Nike',
