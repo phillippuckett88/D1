@@ -139,21 +139,22 @@ app.controller('teamCtrl', function ($scope, $stateParams, teamData, teamService
     $scope.showNewGameForm = false;
     $scope.toggleNewGameForm = function () {
         $scope.showNewGameForm = !$scope.showNewGameForm;    
-        if ($stateParams.teams === /teams/utahjazz) {
+    } 
+            if ($stateParams.team === 'utahjazz') {
             $scope.homeTeam = 'Utah Jazz';
             $scope.logoPath = 'images/jazz-logo.png'
         }
-        else if ($stateParams.teams === /teams/miamiheaet) {
+        else if ($stateParams.team === 'miamiheat') {
             $scope.homeTeam = 'Miami Heat';
             $scope.logoPath = 'images/heat-logo.png'
         }
-        else if ($stateParams.teams === /teams/losangeleslakers) {
+        else if ($stateParams.team === 'losangeleslakers') {
             $scope.homeTeam = 'Los Angeles Lakers';
             $scope.logoPath = 'images/lakers-logo.png'
         } else {
             return '/';
         }
-    } 
+        console.log($scope.logoPath);
     $scope.submitGame = function () { 
         $scope.newGame.homeTeam = $scope.homeTeam.split(' ').join('').toLowerCase();     
     teamService.addNewGame($scope.newGame)
@@ -166,4 +167,5 @@ app.controller('teamCtrl', function ($scope, $stateParams, teamData, teamService
         });
     });
    };
+   console.log($scope);
 });
