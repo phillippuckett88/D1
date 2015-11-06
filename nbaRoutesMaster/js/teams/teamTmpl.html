@@ -16,7 +16,7 @@ If it were me, I would console.log the $scope object to see all the properties t
         <img ng-src="{{logoPath}}">
     </div>
     <div class="record">
-        <h1> Wins: {{homeTeam}} Losses: {{opponent}} </h1>
+        <h1> Wins: {{teamData.wins}} Losses: {{teamData.losses}} </h1>
     </div>
     <div class="btn" ng-click="toggleNewGameForm()"> Add a New Game </div>
     <form ng-show="showNewGameForm" class="form">
@@ -26,9 +26,9 @@ If it were me, I would console.log the $scope object to see all the properties t
         class="form-control" required name="team"></select>
         <br />
         <span class="large"> Score: </span>
-        <br /> ????????:
-        <input class="inputs" type="text" ng-model="$__FIXME__$" placeholder="Home Score"> ????????:
-        <input type="text" class="inputs" ng-model="$__FIXME__$" placeholder="Opponent Score">
+        <br /> {{homeTeam}}:
+        <input class="inputs" type="text" ng-model="homeTeamScore" placeholder="Home Score"> {{opponent}}:
+        <input type="text" class="inputs" ng-model="opponentScore" placeholder="Opponent Score">
         <br />
         <button ng-click="submitGame"> Submit Game </button>
     </form>
@@ -39,9 +39,9 @@ If it were me, I would console.log the $scope object to see all the properties t
         Utah Jazz - 103
         Houston Rockets - 100
       -->
-            Date: ????????
-            <br /> ???????? - ????????
-            <br /> ???????? - ????????
+            <Span>Date: {{game.createdAt | date : 'mediumDate' }}</Span>
+            <br /> {{homeTeam}} - {{game.homeTeamScore}}
+            <br /> {{game.opponent}} - {{game.opponentScore}}
             </br />
         </div>
     </div>

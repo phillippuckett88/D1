@@ -1,10 +1,8 @@
 var app = angular.module('nbaRoutes', ['ui.router']);
 
-app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-
-    $httpProvider.interceptors.push('httpRequestInterceptor');
-
-    $urlRouterProvider.otherwise('/');
+// app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+//     $httpProvider.interceptors.push('httpRequestInterceptor');
+//     $urlRouterProvider.otherwise('/');
     
     
     // routing configuration code
@@ -21,20 +19,20 @@ so that whenever the user is at the index page '/', the templateUrl will
 be js/home/homeTmpl.html and the controller 'homeCtrl'. We will complete 
 the rest of this route a little later. */
 
-    $stateProvider
-        .state('home', {
-            url: '/',
-            templateUrl: 'js/home/homeTmpl.html',
-            controller: 'homeCtrl'
-        })
+    // $stateProvider
+    //     .state('home', {
+    //         url: '/',
+    //         templateUrl: 'js/home/homeTmpl.html',
+    //         controller: 'homeCtrl'
+    //     })
 
 // a //
 /*Now we're going to set up the individual team's routes. 
 It's important to understand that all three teams (Jazz, Lakers, Heat) 
 are going to be using the same Controller and the same Template. */    
 
-        .state('teams', {
-            url: '/teams/:team',
+        // .state('teams', {
+        //     url: '/teams/:team',
        
 // b //
 /*Take note of the /:team that's in the URL. Remember, that makes it so your 
@@ -45,8 +43,8 @@ in the specific team into our getTeamData method that's on our service and get o
 Also note that the menu in our index.html page has links that point to the different teams 
 (which will be caught by :team in our router). */ 
 
-            templateUrl: 'js/teams/teamTmpl.html',
-            controller: 'teamCtrl',
+            // templateUrl: 'js/teams/teamTmpl.html',
+            // controller: 'teamCtrl',
 
 // c //
 /*Now that our templateUrl and our controller are set up for the /teams/:team url, 
@@ -54,7 +52,7 @@ we want to have some data ready for us before that route loads. In this case,
 that data we want available in our controller is the specific teams data. Below where we specify the controller, 
 create a resolve block with the key being resolve: and the value being an object. */
 
-            resolve: {
+            // resolve: {
                
 // i //
 /*The resolve object is going to have a method called teamData: which returns the promise 
@@ -74,17 +72,43 @@ based on the :team parameter in our route. We get access to that variable in our
 by using $routeParams.team. So now go ahead and inject $routeParams into the teamData: method, 
 and pass $routeParams.team as the argument in the teamService.getTeamData() call. */
              
+        //         teamData: function (teamService, $stateParams) {
+        //             return teamService.getTeamData($stateParams.team)
+        //         }
+        //     }
+        // })
+        
+// 2 //
+/*Let's make one last change to the router for now. Add a $urlRouterProvider.otherwise('/'); 
+block so that the router will redirect to the index page if the route the user types in is not recognized. */
+
+//      $urlRouterProvider.otherwise('/'); 
+
+// });
+
+app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    $httpProvider.interceptors.push('httpRequestInterceptor')
+    $urlRouterProvider.otherwise('/'); 
+    
+    // routing configuration code
+
+    $stateProvider
+        .state('home', {
+            url: '/',
+            templateUrl: 'js/home/homeTmpl.html',
+            controller: 'homeCtrl'
+        })
+        .state('teams', {
+            url: '/teams/:team',
+            templateUrl: 'js/teams/teamTmpl.html',
+            controller: 'teamCtrl',
+            resolve: {
                 teamData: function (teamService, $stateParams) {
                     return teamService.getTeamData($stateParams.team)
                 }
             }
         })
         
-// 2 //
-/*Let's make one last change to the router for now. Add a $urlRouterProvider.otherwise('/'); 
-block so that the router will redirect to the index page if the route the user types in is not recognized. */
-
     $urlRouterProvider.otherwise('/'); 
-
-// routing configuration code
+    
 });
